@@ -12,7 +12,7 @@
             body {
                 margin: 0;
             }
-    
+
             #map {
                 height: 100%;
                 width: 100%;
@@ -22,7 +22,7 @@
         <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
         <script>
             var map, osm, controlCapas;
-    
+
             function init() {
                 map = L.map('map', {
                     center: [39.6863, 2.8382],
@@ -33,7 +33,7 @@
                     minZoom: 1,
                     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright"/>OpenStreetMap</a>'
                 }).addTo(map);
-    
+
                 var OpenStreetMap_DE =
                     L.tileLayer('http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
                         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright"/>OpenStreetMap</a>'
@@ -41,14 +41,14 @@
                 var OpenStreetMap_HOT = L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright"/>OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank"/>Humanitarian OpenStreetMapTeam</a>'
                 });
-    
-    
+
+
                 var Hydda_Base = L.tileLayer('http://{s}.tile.openstreetmap.se/hydda/base/{z}/{x}/{y}.png', {
                     minZoom: 0,
                     maxZoom: 18,
                     attribution: 'Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank"/>OpenStreetMap Sweden</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright"/>OpenStreetMap</a>'
                 });
-    
+
                 var Stamen_Toner = L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {
                     attribution: 'Map tiles by <a href="http://stamen.com"/>Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0"/>CC BY 3.0</a> &mdash; Map data &copy;<a href="http://www.openstreetmap.org/copyright"/>OpenStreetMap</a>',
                     subdomains: 'abcd',
@@ -66,7 +66,7 @@
                         'http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
                             attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS,Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom,2012'
                         });
-    
+
                 var Esri_WorldTopoMap =
                     L.tileLayer(
                         'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
@@ -89,9 +89,12 @@
                             attribution: 'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH,CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri',
                             maxZoom: 13
                         });
-    
-    
-    
+
+                var OpenRailwayMap = L.tileLayer('https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | Map style: &copy; <a href="https://www.OpenRailwayMap.org">OpenRailwayMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+                });
+
                 var mapaBase = {
                     'OSM': osm,
                     'OpenStreetMap_DE': OpenStreetMap_DE,
@@ -105,17 +108,21 @@
                     'Esri_WorldShadedRelief': Esri_WorldShadedRelief,
                     'Esri_OceanBasemap': Esri_OceanBasemap
                 };
-                controlCapas = L.control.layers(mapaBase, null);
+
+                var overlayMap = {
+                    'Railway': OpenRailwayMap
+                }
+
+                controlCapas = L.control.layers(mapaBase, overlayMap, {collapsed:false});
                 controlCapas.addTo(map);
                 controlEscala = L.control.scale();
                 controlEscala.addTo(map);
             }
         </script>
     </head>
-    
+
     <body onLoad="init()">
         <div id="map"> </div>
     </body>
-    
+
 </html>
-    
