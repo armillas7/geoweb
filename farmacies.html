@@ -1,0 +1,29 @@
+<html lang="es">
+
+    <head>
+        <title>Farm&agrave;cies</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="author" content="autor" />
+        <meta name="description" content="descripción página" />
+        <meta name="robots" content="index,follow" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.js"></script>
+        <script src="https://calvinmetcalf.github.io/leaflet-ajax/dist/leaflet.ajax.js"></script>
+        <script src="js/map.js"></script>
+        <script src="js/farmacies.js"></script>
+        
+        <script>       
+            function initMapaFarmacies(){
+                init();
+                addDatosFarmacias();   
+            }         
+        </script>
+    </head>
+
+    <body onLoad="initMapaFarmacies()">
+        <div id="map"> </div>
+    </body>
+
+</html>
