@@ -1,4 +1,5 @@
 <html>
+
 <head>
     <meta charset='utf-8' />
     <title>Hibrido</title>
@@ -10,6 +11,7 @@
             margin: 0;
             padding: 0;
         }
+
         #map {
             position: absolute;
             top: 0;
@@ -36,11 +38,56 @@
             }));
             map.addControl(new mapboxgl.NavigationControl());
 
+            map.on('load', function () {
+                map.addSource("carrils-bici", {
+                    type: "geojson",
+                    data: "geojson/CARRIL_BICI.geojson" //tambe podriem afegir url de qualsevol lloc (cercar a google per geojson de github per ex.)
+                }); //fin map source
+
+                map.addSource("provincies", {
+                    type: "geojson",
+                    data: "https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/spain-provinces.geojson" //tambe podriem afegir url de qualsevol lloc (cercar a google per geojson de github per ex.)
+                }); //fin map source
+
+
+                map.addLayer({
+                    id: "carrils-bici-layer",
+                    type: "line",
+                    source: "carrils-bici",
+                    layout: {
+                        "line-join": "round",
+                        "line-cap": "round"
+                    },
+                    paint: {
+                        "line-color": "#FF0000",
+                        "line-width": 8
+                    }
+                });
+
+                map.addLayer({
+                    id: "provincies-ayer",
+                    type: "line",
+                    source: "provincies",
+                    layout: {
+                        "line-join": "round",
+                        "line-cap": "round"
+                    },
+                    paint: {
+                        "line-color": "#FF0000",
+                        "line-width": 8
+                    }
+                }); //fin add layers
+            }); //Fin load mapa
+
+
+            
 
         }
     </script>
 </head>
+
 <body onload="Init()">
     <div id='map'></div>
 </body>
+
 </html>
