@@ -31,9 +31,11 @@ body {
 
 .panelTopIzquierda input{
     cursor:pointer;
+    display: block;
 }
 
 #checkboxUpdate {
+    clear:both;
     display: inline-block;
     width: 30px;
 }
