@@ -35,7 +35,6 @@ body {
 }
 
 #checkboxUpdate {
-    clear:both;
     display: inline-block;
     width: 30px;
 }

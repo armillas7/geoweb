@@ -55,7 +55,7 @@ function addEdificiosCapa() {
 // Els edificis en blanc és perquè numberOfFloorsAboveGround és igual a zero. Amb el filter podem evitar aquests 2 colors.
 
 
-function addPopupToMapEdificis(nomCapa) {
+function addPopupToMapEdificis2(nomCapa) {
     map.on('click', nomCapa, function (e) {
         var text = "";
         //console.info(e);
@@ -78,6 +78,47 @@ function addPopupToMapEdificis(nomCapa) {
         map.getCanvas().style.cursor = '';
     });
 }
+
+function addPopupToMapEdificis(nombreCapa) {
+
+    map.on('click', nombreCapa, function (e) {
+
+        var text = "";
+        //console.info(e);
+        for (key in e.features[0].properties) {
+
+            if (key == "numberOfFloorsAboveGround") {
+                text += "<b>Numero de plantas</b>:" + e.features[0].properties[key] + "<br>";
+            }
+            if (key == "localId") {
+                //localId 0004702DF3800C_part1
+                //http://ovc.catastro.meh.es/OVCServWeb/OVCWcfLibres/OVCFotoFachada.svc/RecuperarFotoFachadaGet?ReferenciaCatastral=0004701DF3800C
+                //https://www1.sedecatastro.gob.es/CYCBienInmueble/OVCListaBienes.aspx?rc1=0004701&rc2=DF3800C
+
+                var localId = e.features[0].properties[key];
+                var localIdSplit = localId.split("_"); // 0004702DF3800C  part1
+                var parte1 = localIdSplit[0].substring(0, 7);
+                var parte2 = localIdSplit[0].substring(7, localIdSplit[0].length);
+                text += "<img width=200 src=http://ovc.catastro.meh.es/OVCServWeb/OVCWcfLibres/OVCFotoFachada.svc/RecuperarFotoFachadaGet?ReferenciaCatastral=" + localId + "><br>";
+                text += "<a target=blank href=https://www1.sedecatastro.gob.es/CYCBienInmueble/OVCListaBienes.aspx?rc1=" + parte1 + "&rc2=" + parte2 + ">Ficha</a><br>";
+            }
+        }
+        new mapboxgl.Popup()
+            .setLngLat(e.lngLat)
+            .setHTML(text)
+            .addTo(map);
+    });
+
+    map.on('mouseenter', nombreCapa, function () {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    map.on('mouseleave', nombreCapa, function () {
+        map.getCanvas().style.cursor = '';
+    });
+
+}
+
 
 function filtrarEdificis(valor) { // Cridarem a aquesta funció cada cop que movem l'slider (amb un event). Valor serà la dada de l'slider. Filtrarem per número de plantes.
     map.setFilter("edificis", [">", "numberOfFloorsAboveGround", parseInt(valor)]);

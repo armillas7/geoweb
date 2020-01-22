@@ -38,7 +38,7 @@ function generarPeticionTerremotos() {
         mg = 3;
     }
 
-    var peticion = 'http://api.geonames.org/earthquakesJSON?' +
+    var peticion = 'https://secure.geonames.org/earthquakesJSON?' +
         'north=' + map.getBounds()._ne.lat + '&' +
         'south=' + map.getBounds()._sw.lat + '&' +
         'east=' + map.getBounds()._ne.lng + '&' +
@@ -52,9 +52,7 @@ function generarPeticionTerremotos() {
         var geoJSON = terremotosGeonamesToGeoJSON(respuestaGeonames);
 
         if (map.getSource("terremotos_source")) {
-
             map.getSource("terremotos_source").setData(geoJSON);
-
         } else {
 
             map.addSource("terremotos_source", {
